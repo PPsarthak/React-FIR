@@ -1,25 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
-
+import CommissionerDashboard from './CommDash';
+import AllCases from './allCasesTable';
+import CaseTable from './searchBar';
+import CaseTableS from './CaseTableS';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    <CommissionerDashboard/>
+    {/* <AllCases/> */}
+    <CaseTableS/>
+    </>
+  )
 }
 
 export default App;
+
+/*
+The line " import CommissionerDashboard from './CommDash'; " is importing a function CommissionerDashboard from the path. 
+If you want to see Commissioner Dashboard - Just use <CommisssionerDashboard/> tag
+
+All the CSS is written in App.css
+
+*/

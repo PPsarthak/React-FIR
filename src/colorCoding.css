@@ -1,0 +1,33 @@
+.case-status-filled {
+    color: #a4c46a; /* Example color for "Open" status */
+}
+.case-status-officer-appointed {
+    color: #808ff4; /* Example color for "Open" status */
+}
+.case-status-investigating {
+    color: #0fcdd0; /* Example color for "Open" status */
+}
+.case-status-suspects-identified {
+    color: #e1a3ee; /* Example color for "Open" status */
+}
+.case-status-suspects-found {
+    color: #f79cd4; /* Example color for "Open" status */
+}
+.case-status-proof-found {
+    color: #73cb88; /* Example color for "Open" status */
+}
+.case-status-no-proof-found {
+    color: #e6ad7a; /* Example color for "Open" status */
+}
+.case-status-criminal-in-custody {
+    color: #fb9fb1; /* Example color for "Open" status */
+}
+.case-status-solved {
+    color: #34cfad; /* Example color for "Open" status */
+} 
+.case-status-closed {
+    color: red; /* Example color for "Closed" status */
+}
+.case-status-reopened {
+    color: #b8bf63; /* Example color for "Closed" status */
+}
