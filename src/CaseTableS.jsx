@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTable, useGlobalFilter } from 'react-table';
 import CaseModal from './caseModal';
 import NotificationModal from './NotificationModal';
+
 // Define your columns with the specific column names
 const columns = [
   {
@@ -149,96 +150,96 @@ const data = [
 
 export default function CaseTableS() {
     const [notificationModalOpen, setNotificationModalOpen] = useState(false);
+    const [selectedCase, setSelectedCase] = useState(null);
+  
+    // Function to open the modal
+    const openModal = (caseData) => {
+      setSelectedCase(caseData);
+    };
+  
+    // Function to open the notification modal
     const openNotificationModal = () => {
-        setNotificationModalOpen(true);
-      };
-      
-  /* Earlier Code */
-  const [selectedCase, setSelectedCase] = useState(null);
-
-  // Function to open the modal
-  const openModal = (caseData) => {
-    setSelectedCase(caseData);
-  };
-
-  // Function to close the modal
-  const closeModal = () => {
-    setSelectedCase(null);
-  };
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    setGlobalFilter,
-  } = useTable(
-    {
-      columns,
-      data,
-    },
-    useGlobalFilter
-  );
-
-  const { globalFilter } = state;
-
-  return (
-    <div>
-      <input
-        id="searchbar"
-        type="text"
-        placeholder="Search..."
-        value={globalFilter || ''}
-        onChange={(e) => setGlobalFilter(e.target.value)}
-      />
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>
-                      {/* Check if the current cell corresponds to the "View Details" column */}
-                      {cell.column.id === 'viewDetails' ? (
-                        <button onClick={() => {
-                            openNotificationModal();
-                            openModal(row.original);
-                          }}>View Details</button>
-                          
-                      ) : (
-                        cell.render('Cell')
-                      )}
-                    </td>
-                  );
-                })}
+      setNotificationModalOpen(true);
+    };
+  
+    // Function to close the modals
+    const closeModal = () => {
+      setSelectedCase(null);
+      setNotificationModalOpen(false);
+    };
+  
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      rows,
+      prepareRow,
+      state,
+      setGlobalFilter,
+    } = useTable(
+      {
+        columns,
+        data,
+      },
+      useGlobalFilter
+    );
+  
+    const { globalFilter } = state;
+  
+    return (
+      <div>
+        <input
+          id="searchbar"
+          type="text"
+          placeholder="Search..."
+          value={globalFilter || ''}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+        />
+        <table {...getTableProps()}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      {/* Render the modal if a case is selected */}
-      {selectedCase && (
-        <CaseModal caseDetails={selectedCase} onClose={closeModal} />
-        
-      )}
-      <NotificationModal
-        isOpen={notificationModalOpen}
-        onClose={() => setNotificationModalOpen(false)}
-        message="This is your notification message."
-      />
-    </div>
-  );
-}
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>
+                        {/* Check if the current cell corresponds to the "View Details" column */}
+                        {cell.column.id === 'viewDetails' ? (
+                          <button onClick={() => {
+                              openModal(row.original);
+                              openNotificationModal();
+                            }}>View Details</button>
+                        ) : (
+                          cell.render('Cell')
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        {/* Render the CaseModal if a case is selected */}
+        {/* {selectedCase && (
+          <CaseModal caseDetails={selectedCase} onClose={closeModal} />
+        )} */}
+        {/* Render the NotificationModal */}
+        {selectedCase && (<NotificationModal
+          isOpen={notificationModalOpen}
+          onClose={closeModal}
+          caseDetails={selectedCase} // Pass selectedCase to NotificationModal
+        />)}
+      </div>
+    );
+  }
